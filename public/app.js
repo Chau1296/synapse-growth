@@ -5,6 +5,13 @@ const rangeHighEl = document.getElementById('rangeHigh');
 const rangeLowEl = document.getElementById('rangeLow');
 const rangeSelect = document.getElementById('rangeSelect');
 const refreshBtn = document.getElementById('refreshBtn');
+const STOOQ_CSV_URL = 'https://stooq.com/q/d/l/?s=gc.f&i=d';
+
+const DATA_SOURCES = [
+  STOOQ_CSV_URL,
+  `https://api.allorigins.win/raw?url=${encodeURIComponent(STOOQ_CSV_URL)}`,
+  `https://r.jina.ai/http://stooq.com/q/d/l/?s=gc.f&i=d`
+];
 
 const RANGE_DAYS = {
   '1m': 31,
@@ -166,14 +173,28 @@ async function loadData() {
   refreshBtn.disabled = true;
 
   try {
-    const response = await fetch('https://stooq.com/q/d/l/?s=gc.f&i=d', {
-      cache: 'no-store'
-    });
-    if (!response.ok) {
-      throw new Error(`Data fetch failed: ${response.status}`);
+    let csv = '';
+    let fetchError = '';
+
+    for (const source of DATA_SOURCES) {
+      try {
+        const response = await fetch(source, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        csv = await response.text();
+        if (csv) {
+          break;
+        }
+      } catch (error) {
+        fetchError = error.message;
+      }
     }
 
-    const csv = await response.text();
+    if (!csv) {
+      throw new Error(fetchError || 'Unable to load data from all sources');
+    }
+
     const parsed = parseCsv(csv);
     if (!parsed.length) {
       throw new Error('No data rows returned from source');
