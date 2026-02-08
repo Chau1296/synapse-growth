@@ -1,7 +1,7 @@
 {
-  "name": "gold-pulse",
+  "name": "synapse-growth",
   "version": "1.0.0",
-  "description": "Gold price visualization web app",
+  "description": "Knowledge hub web app for data analytics and SaaS growth",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

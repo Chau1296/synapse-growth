@@ -1,219 +1,158 @@
-const statusEl = document.getElementById('status');
-const latestPriceEl = document.getElementById('latestPrice');
-const dailyChangeEl = document.getElementById('dailyChange');
-const rangeHighEl = document.getElementById('rangeHigh');
-const rangeLowEl = document.getElementById('rangeLow');
-const rangeSelect = document.getElementById('rangeSelect');
-const refreshBtn = document.getElementById('refreshBtn');
-const STOOQ_CSV_URL = 'https://stooq.com/q/d/l/?s=gc.f&i=d';
+const topicFilter = document.getElementById('topicFilter');
+const searchInput = document.getElementById('searchInput');
+const panels = Array.from(document.querySelectorAll('.panel'));
+const caseList = document.getElementById('caseList');
+const quizQuestion = document.getElementById('quizQuestion');
+const quizAnswer = document.getElementById('quizAnswer');
+const showAnswerBtn = document.getElementById('showAnswerBtn');
+const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+const projectPromptBtn = document.getElementById('projectPromptBtn');
+const projectPromptText = document.getElementById('projectPromptText');
+const resultCount = document.getElementById('resultCount');
+const sparkLine = document.getElementById('sparkLine');
 
-const DATA_SOURCES = [
-  STOOQ_CSV_URL,
-  `https://api.allorigins.win/raw?url=${encodeURIComponent(STOOQ_CSV_URL)}`,
-  `https://r.jina.ai/http://stooq.com/q/d/l/?s=gc.f&i=d`
+const sparkMessages = [
+  'System sync: ask better questions.',
+  'Navigator mode: map metrics to decisions.',
+  'Builder mode: convert ideas into SQL.',
+  'Strategist mode: frame insights for action.',
+  'Probe mode: trace anomalies to root cause.'
 ];
 
-const RANGE_DAYS = {
-  '1m': 31,
-  '3m': 93,
-  '6m': 186,
-  '1y': 366,
-  '3y': 1096,
-  '5y': 1827
-};
-
-let chart;
-
-function formatUsd(value) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 2
-  }).format(value);
-}
-
-function parseCsv(csv) {
-  const lines = csv.trim().split('\n');
-  if (lines.length < 2) {
-    return [];
+const caseStudies = [
+  {
+    title: 'Onboarding Funnel Repair',
+    context: 'A B2B SaaS team saw strong trial signup growth but flat activation.',
+    actions: 'Mapped step-level funnel, segmented by ICP, and tested an onboarding checklist experiment.',
+    impact: 'Activation rose from 27% to 35%; payback period improved through better realization of lead quality.'
+  },
+  {
+    title: 'Churn Risk Forecasting',
+    context: 'Customer success could not prioritize outreach effectively.',
+    actions: 'Built a weekly churn risk score using product usage decline, support sentiment, and billing events.',
+    impact: 'Saved 11 enterprise accounts in one quarter and improved net revenue retention.'
+  },
+  {
+    title: 'Metric Dictionary Rollout',
+    context: 'Finance and product reported conflicting MRR values.',
+    actions: 'Defined governance owners, canonical SQL models, and dashboard certification rules.',
+    impact: 'Removed reporting conflicts and cut executive meeting prep time by 40%.'
   }
+];
 
-  const rows = [];
-  for (let i = 1; i < lines.length; i += 1) {
-    const [date, open, high, low, close] = lines[i].split(',');
-    const closeNum = Number(close);
-    if (!date || Number.isNaN(closeNum)) {
-      continue;
-    }
-    rows.push({
-      date,
-      open: Number(open),
-      high: Number(high),
-      low: Number(low),
-      close: closeNum
+const quizBank = [
+  {
+    q: 'Why is median often preferred over mean for SaaS deal-size reporting?',
+    a: 'Median is robust to outliers, so a few large deals do not distort the typical customer pattern.'
+  },
+  {
+    q: 'What is one guardrail metric to include in an activation experiment?',
+    a: 'Short-term support ticket rate. Activation should improve without increasing onboarding confusion.'
+  },
+  {
+    q: 'What should come first: dashboard building or metric definitions?',
+    a: 'Metric definitions first. Dashboards built before definitions become inconsistent quickly.'
+  },
+  {
+    q: 'How does a window function help in retention analysis?',
+    a: 'It allows user-level ordering and period comparisons without collapsing rows too early.'
+  }
+];
+
+const projectPrompts = [
+  'Build a full funnel analysis for a SaaS trial flow:\n1) define stage conversion metrics\n2) identify largest drop-off\n3) propose two experiments and expected lift.',
+  'Create a retention cohort model:\n1) weekly cohorts\n2) logo vs revenue retention\n3) segment by acquisition channel and interpret differences.',
+  'Design a governance starter pack:\n1) critical metrics dictionary\n2) data quality checks\n3) owner map and incident escalation path.',
+  'Produce an executive growth memo:\n1) diagnose churn and expansion trends\n2) quantify business impact\n3) prioritize next-quarter analytics roadmap.'
+];
+
+let quizIndex = 0;
+
+function renderCases() {
+  caseList.innerHTML = '';
+
+  caseStudies.forEach((item) => {
+    const wrap = document.createElement('article');
+    wrap.className = 'case-item';
+
+    const title = document.createElement('h3');
+    title.textContent = item.title;
+
+    const context = document.createElement('p');
+    context.textContent = `Context: ${item.context}`;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Reveal approach & impact';
+
+    const detail = document.createElement('p');
+    detail.classList.add('is-hidden');
+    detail.textContent = `Approach: ${item.actions} Impact: ${item.impact}`;
+
+    btn.addEventListener('click', () => {
+      const hidden = detail.classList.contains('is-hidden');
+      detail.classList.toggle('is-hidden');
+      btn.textContent = hidden ? 'Hide details' : 'Reveal approach & impact';
     });
-  }
 
-  return rows;
-}
-
-function toDisplayDate(isoDate) {
-  return new Date(`${isoDate}T00:00:00`).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
+    wrap.append(title, context, btn, detail);
+    caseList.appendChild(wrap);
   });
 }
 
-function filterByRange(rows, rangeKey) {
-  const days = RANGE_DAYS[rangeKey] || RANGE_DAYS['6m'];
-  return rows.slice(-days);
-}
+function applyFilters() {
+  const topic = topicFilter.value;
+  const query = searchInput.value.trim().toLowerCase();
 
-function updateStats(rows) {
-  const latest = rows[rows.length - 1];
-  const previous = rows[rows.length - 2] || latest;
+  let visibleCount = 0;
 
-  const change = latest.close - previous.close;
-  const changePct = previous.close === 0 ? 0 : (change / previous.close) * 100;
+  panels.forEach((panel) => {
+    const matchesTopic = topic === 'all' || panel.dataset.topic === topic;
+    const panelText = panel.textContent.toLowerCase();
+    const matchesQuery = query === '' || panelText.includes(query);
+    const visible = matchesTopic && matchesQuery;
 
-  const highs = rows.map((row) => row.high);
-  const lows = rows.map((row) => row.low);
+    panel.classList.toggle('is-hidden', !visible);
 
-  latestPriceEl.textContent = formatUsd(latest.close);
-
-  dailyChangeEl.classList.remove('up', 'down');
-  dailyChangeEl.classList.add(change >= 0 ? 'up' : 'down');
-  dailyChangeEl.textContent = `${change >= 0 ? '+' : ''}${formatUsd(change)} (${changePct.toFixed(2)}%)`;
-
-  rangeHighEl.textContent = formatUsd(Math.max(...highs));
-  rangeLowEl.textContent = formatUsd(Math.min(...lows));
-}
-
-function renderChart(rows) {
-  const labels = rows.map((row) => toDisplayDate(row.date));
-  const data = rows.map((row) => row.close);
-
-  if (chart) {
-    chart.destroy();
-  }
-
-  const ctx = document.getElementById('goldChart');
-  chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: 'Gold Price (USD/oz)',
-          data,
-          borderColor: '#c98900',
-          borderWidth: 2.5,
-          pointRadius: 0,
-          pointHitRadius: 12,
-          fill: true,
-          tension: 0.24,
-          backgroundColor: (context) => {
-            const { chart: chartCtx } = context;
-            const { ctx, chartArea } = chartCtx;
-            if (!chartArea) {
-              return 'rgba(201, 137, 0, 0.26)';
-            }
-            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-            gradient.addColorStop(0, 'rgba(201, 137, 0, 0.38)');
-            gradient.addColorStop(1, 'rgba(201, 137, 0, 0.02)');
-            return gradient;
-          }
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            boxWidth: 12
-          }
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-          callbacks: {
-            label: (ctx) => ` ${formatUsd(ctx.parsed.y)}`
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            maxTicksLimit: 8,
-            autoSkip: true
-          },
-          grid: {
-            color: 'rgba(18, 18, 18, 0.06)'
-          }
-        },
-        y: {
-          ticks: {
-            callback: (value) => formatUsd(value)
-          },
-          grid: {
-            color: 'rgba(18, 18, 18, 0.06)'
-          }
-        }
-      }
+    if (visible) {
+      visibleCount += 1;
     }
   });
+
+  resultCount.textContent = `Showing ${visibleCount} card${visibleCount === 1 ? '' : 's'}`;
 }
 
-async function loadData() {
-  statusEl.textContent = 'Loading data...';
-  refreshBtn.disabled = true;
-
-  try {
-    let csv = '';
-    let fetchError = '';
-
-    for (const source of DATA_SOURCES) {
-      try {
-        const response = await fetch(source, { cache: 'no-store' });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        csv = await response.text();
-        if (csv) {
-          break;
-        }
-      } catch (error) {
-        fetchError = error.message;
-      }
-    }
-
-    if (!csv) {
-      throw new Error(fetchError || 'Unable to load data from all sources');
-    }
-
-    const parsed = parseCsv(csv);
-    if (!parsed.length) {
-      throw new Error('No data rows returned from source');
-    }
-
-    const rows = filterByRange(parsed, rangeSelect.value);
-    updateStats(rows);
-    renderChart(rows);
-
-    const last = rows[rows.length - 1];
-    statusEl.textContent = `Updated: ${toDisplayDate(last.date)} (${rows.length} points)`;
-  } catch (error) {
-    statusEl.textContent = `Error loading data: ${error.message}`;
-  } finally {
-    refreshBtn.disabled = false;
-  }
+function loadQuiz(index) {
+  const item = quizBank[index];
+  quizQuestion.textContent = item.q;
+  quizAnswer.textContent = '';
 }
 
-rangeSelect.addEventListener('change', loadData);
-refreshBtn.addEventListener('click', loadData);
+function nextQuiz() {
+  quizIndex = (quizIndex + 1) % quizBank.length;
+  loadQuiz(quizIndex);
+}
 
-loadData();
+showAnswerBtn.addEventListener('click', () => {
+  quizAnswer.textContent = quizBank[quizIndex].a;
+});
+
+nextQuestionBtn.addEventListener('click', nextQuiz);
+
+projectPromptBtn.addEventListener('click', () => {
+  const choice = projectPrompts[Math.floor(Math.random() * projectPrompts.length)];
+  projectPromptText.textContent = choice;
+});
+
+topicFilter.addEventListener('change', applyFilters);
+searchInput.addEventListener('input', applyFilters);
+
+panels.forEach((panel, index) => {
+  panel.style.animationDelay = `${index * 55}ms`;
+});
+
+sparkLine.textContent = sparkMessages[Math.floor(Math.random() * sparkMessages.length)];
+
+renderCases();
+loadQuiz(quizIndex);
+applyFilters();

@@ -3,63 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gold Pulse | Live Gold Price Dashboard</title>
+  <title>Synapse Growth | Futuristic Analytics & SaaS Growth Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Exo+2:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
   <script src="./app.js" defer></script>
 </head>
 <body>
-  <div class="aurora" aria-hidden="true"></div>
+  <div class="backdrop" aria-hidden="true"></div>
 
-  <main class="shell">
-    <header class="hero">
-      <p class="kicker">Commodities Dashboard</p>
-      <h1>Gold Pulse</h1>
-      <p class="subtitle">Interactive gold price tracker backed by Stooq historical data and refreshed on demand.</p>
-    </header>
+  <header class="hero">
+    <div class="brand-row">
+      <p class="tag">Neural Knowledge Grid</p>
+      <p class="bubble" id="sparkLine">System sync: initializing insight core...</p>
+    </div>
 
-    <section class="metrics" aria-label="Gold metrics">
-      <article class="metric-card">
-        <p class="label">Latest Price (USD/oz)</p>
-        <p class="value" id="latestPrice">--</p>
-      </article>
-      <article class="metric-card">
-        <p class="label">Daily Change</p>
-        <p class="value" id="dailyChange">--</p>
-      </article>
-      <article class="metric-card">
-        <p class="label">Highest (range)</p>
-        <p class="value" id="rangeHigh">--</p>
-      </article>
-      <article class="metric-card">
-        <p class="label">Lowest (range)</p>
-        <p class="value" id="rangeLow">--</p>
-      </article>
+    <h1>Synapse Growth</h1>
+    <p class="lead">A futuristic command center for data analytics and SaaS growth: theory, frameworks, case studies, and project drills in one connected interface.</p>
+
+    <div class="hero-tools">
+      <label for="topicFilter">Navigate sector</label>
+      <select id="topicFilter">
+        <option value="all">All topics</option>
+        <option value="foundations">Foundations</option>
+        <option value="statistics">Statistics</option>
+        <option value="sql">SQL</option>
+        <option value="skills">Analytics Skills & Mindset</option>
+        <option value="governance">Data Governance</option>
+        <option value="engineering">Data Engineering</option>
+        <option value="frameworks">Analytics Frameworks</option>
+        <option value="saas">SaaS Growth</option>
+        <option value="practice">Practice</option>
+      </select>
+      <input id="searchInput" type="search" placeholder="Search protocols, metrics, case studies..." aria-label="Search knowledge hub">
+    </div>
+
+    <div class="status-row">
+      <p id="resultCount">Showing 0 cards</p>
+      <p>Signal tip: scan <span class="chip">retention</span> or <span class="chip">A/B test</span>.</p>
+    </div>
+  </header>
+
+  <main class="layout" id="knowledgeGrid">
+    <section class="panel" data-topic="foundations">
+      <p class="eyebrow">Theory Base</p>
+      <h2>Analytics Foundations</h2>
+      <p class="summary">Understand the core loop: business question -> metric design -> data collection -> analysis -> decision -> outcome tracking.</p>
+      <ul>
+        <li>Descriptive, diagnostic, predictive, and prescriptive analytics.</li>
+        <li>North Star metric design and metric trees.</li>
+        <li>Leading vs lagging indicators and confidence in decisions.</li>
+      </ul>
+      <p class="example"><strong>Example:</strong> For subscription products, activation rate is often a leading indicator for 30-day retention.</p>
     </section>
 
-    <section class="panel controls-panel">
-      <div class="controls">
-        <label for="rangeSelect">Range</label>
-        <select id="rangeSelect">
-          <option value="1m">1 month</option>
-          <option value="3m">3 months</option>
-          <option value="6m" selected>6 months</option>
-          <option value="1y">1 year</option>
-          <option value="3y">3 years</option>
-          <option value="5y">5 years</option>
-        </select>
-        <button id="refreshBtn" type="button">Refresh</button>
+    <section class="panel" data-topic="statistics">
+      <p class="eyebrow">Decision Science</p>
+      <h2>Statistics for Product Analytics</h2>
+      <p class="summary">Use statistics to decide under uncertainty, not just to report averages.</p>
+      <ul>
+        <li>Sampling, distributions, confidence intervals, and hypothesis testing.</li>
+        <li>A/B test design: sample size, power, guardrail metrics, segmentation.</li>
+        <li>Causal pitfalls: Simpson's paradox, survivorship bias, and p-hacking.</li>
+      </ul>
+      <p class="example"><strong>Best practice:</strong> Pre-register experiment success criteria before launch.</p>
+    </section>
+
+    <section class="panel" data-topic="sql">
+      <p class="eyebrow">Builder Toolkit</p>
+      <h2>SQL Mastery Path</h2>
+      <p class="summary">SQL is still the highest-leverage skill for analysts and growth teams.</p>
+      <ul>
+        <li>Core querying: joins, CTEs, window functions, and date handling.</li>
+        <li>Analytics patterns: cohort retention, funnel drop-off, customer LTV.</li>
+        <li>Performance mindset: indexing concepts and query cost awareness.</li>
+      </ul>
+      <p class="example"><strong>Project:</strong> Build a weekly KPI mart with one trusted query per metric.</p>
+    </section>
+
+    <section class="panel" data-topic="skills">
+      <p class="eyebrow">Mindset</p>
+      <h2>Analytics Skills & Mindset</h2>
+      <p class="summary">Great analysts pair technical fluency with structured thinking and clear storytelling.</p>
+      <ul>
+        <li>Problem framing, decomposition, and hypothesis-driven analysis.</li>
+        <li>Stakeholder alignment: convert ambiguity into measurable outcomes.</li>
+        <li>Decision memos: recommendation, tradeoffs, risk, and next test.</li>
+      </ul>
+      <p class="example"><strong>Real world pattern:</strong> Teams trust analysts who expose assumptions and uncertainty clearly.</p>
+    </section>
+
+    <section class="panel" data-topic="governance">
+      <p class="eyebrow">Reliability</p>
+      <h2>Data Governance & Quality</h2>
+      <p class="summary">Reliable decisions require trustworthy data contracts and clear ownership.</p>
+      <ul>
+        <li>Ownership model: domain stewards, metric owners, freshness SLA.</li>
+        <li>Data quality checks: null rates, duplicates, schema drift, anomaly alerts.</li>
+        <li>Privacy basics: retention policy, access controls, and auditability.</li>
+      </ul>
+      <p class="example"><strong>Case:</strong> A canonical "active customer" metric removes cross-team reporting conflict.</p>
+    </section>
+
+    <section class="panel" data-topic="engineering">
+      <p class="eyebrow">Pipelines</p>
+      <h2>Data Engineering for Analytics</h2>
+      <p class="summary">Modern analytics needs robust pipelines, observability, and reproducible transformations.</p>
+      <ul>
+        <li>Batch vs streaming architecture and late-arriving event handling.</li>
+        <li>ELT modeling in layers: staging, intermediate, mart.</li>
+        <li>Pipeline health: lineage, test coverage, and backfill strategy.</li>
+      </ul>
+      <p class="example"><strong>Project:</strong> Design an event pipeline supporting both product funnels and finance reporting.</p>
+    </section>
+
+    <section class="panel" data-topic="frameworks">
+      <p class="eyebrow">Playbooks</p>
+      <h2>Analytics Frameworks</h2>
+      <p class="summary">Frameworks reduce chaos and make analysis outputs reusable.</p>
+      <ul>
+        <li>AARRR funnel for growth diagnostics.</li>
+        <li>HEART for product health and user experience metrics.</li>
+        <li>Opportunity Solution Tree for linking user problems to outcomes.</li>
+      </ul>
+      <p class="example"><strong>Best practice:</strong> Pair every framework with a metric dictionary and review cadence.</p>
+    </section>
+
+    <section class="panel" data-topic="saas">
+      <p class="eyebrow">Growth Engine</p>
+      <h2>SaaS Growth Analytics</h2>
+      <p class="summary">SaaS growth compounds when acquisition quality, activation, retention, and monetization align.</p>
+      <ul>
+        <li>Core metrics: MRR, ARR, CAC, payback period, NRR, gross/net churn.</li>
+        <li>Pricing & packaging analysis for expansion revenue.</li>
+        <li>Lifecycle analytics from signup to expansion loops.</li>
+      </ul>
+      <p class="example"><strong>Case study:</strong> Improving onboarding completion by 8% lifted 90-day retention and NRR.</p>
+    </section>
+
+    <section class="panel case-panel" data-topic="saas">
+      <p class="eyebrow">Story Time</p>
+      <h2>Case Studies</h2>
+      <div class="case-list" id="caseList"></div>
+    </section>
+
+    <section class="panel practice-panel" data-topic="practice">
+      <p class="eyebrow">Do The Work</p>
+      <h2>Practice Studio</h2>
+      <p class="summary">Train weekly with scenario drills and project prompts. Build your analyst muscle by shipping one mini project at a time.</p>
+
+      <div class="practice-block">
+        <h3>Quick Quiz</h3>
+        <p id="quizQuestion">Loading question...</p>
+        <div class="quiz-actions">
+          <button type="button" id="showAnswerBtn">Reveal Answer</button>
+          <button type="button" id="nextQuestionBtn">Next Question</button>
+        </div>
+        <p id="quizAnswer" class="answer"></p>
       </div>
-      <p class="status" id="status">Loading data...</p>
-      <p class="source">Source: Stooq Gold Futures (<a href="https://stooq.com/q/d/l/?s=gc.f&i=d" target="_blank" rel="noopener noreferrer">gc.f daily CSV</a>)</p>
-    </section>
 
-    <section class="panel chart-panel">
-      <canvas id="goldChart" aria-label="Gold price line chart" role="img"></canvas>
+      <div class="practice-block">
+        <h3>Project Prompt Generator</h3>
+        <button type="button" id="projectPromptBtn">Generate Prompt</button>
+        <p id="projectPromptText" class="project-prompt">Press generate to receive a real-world analytics build challenge.</p>
+      </div>
+
+      <div class="practice-block">
+        <h3>Deliberate Practice Checklist</h3>
+        <ul>
+          <li>Define one business question and one decision owner.</li>
+          <li>Write hypotheses before touching the data.</li>
+          <li>Build one SQL analysis, one chart, and one recommendation memo.</li>
+          <li>List two risks and one follow-up experiment.</li>
+        </ul>
+      </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <p>Use Synapse Growth as a reusable curriculum for analyst onboarding, interview prep, and cross-functional analytics coaching.</p>
+  </footer>
 </body>
 </html>

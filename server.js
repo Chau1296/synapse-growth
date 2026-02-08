@@ -63,5 +63,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Gold Pulse running at http://localhost:${PORT}`);
+  console.log(`Synapse Growth running at http://localhost:${PORT}`);
 });

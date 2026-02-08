@@ -1,15 +1,14 @@
-# Gold Pulse
+# Synapse Growth
 
-A static web app to visualize gold prices with an interactive chart and quick summary metrics.
+Synapse Growth is a web-based knowledge hub for **data analytics** and **SaaS growth**.
 
-## Features
+It includes:
+- Theory base across analytics, statistics, SQL, governance, and data engineering
+- Best practices and practical frameworks for product and growth teams
+- Real-world case studies with context, approach, and impact
+- Practice studio with quiz drills and project prompt generator
 
-- Live fetch of daily gold futures data (USD/oz)
-- Time-range selector (1M, 3M, 6M, 1Y, 3Y, 5Y)
-- Key metrics: latest price, day-over-day move, range high, range low
-- GitHub Pages deployment via GitHub Actions
-
-## Local run
+## Run locally
 
 ```bash
 npm start
@@ -17,10 +16,12 @@ npm start
 
 Then open [http://localhost:3000](http://localhost:3000).
 
-## Data source
+## Scope covered
 
-- Stooq Gold Futures CSV: [https://stooq.com/q/d/l/?s=gc.f&i=d](https://stooq.com/q/d/l/?s=gc.f&i=d)
-
-## Deploy
-
-Push to `main`. The included workflow in `.github/workflows/deploy-pages.yml` publishes `public/` to GitHub Pages.
+- Statistics and experimentation
+- SQL analysis patterns
+- Analytics skills and decision mindset
+- Data governance and quality ownership
+- Data engineering patterns for analytics
+- Analytics frameworks (AARRR, HEART, OST)
+- SaaS growth metrics and lifecycle analytics
