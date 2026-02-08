@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Pulse | Live Gold Price Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="hero">
+      <p class="kicker">Commodities Dashboard</p>
+      <h1>Gold Pulse</h1>
+      <p class="subtitle">Interactive gold price tracker backed by Stooq historical data and refreshed on demand.</p>
+    </header>
+
+    <section class="metrics" aria-label="Gold metrics">
+      <article class="metric-card">
+        <p class="label">Latest Price (USD/oz)</p>
+        <p class="value" id="latestPrice">--</p>
+      </article>
+      <article class="metric-card">
+        <p class="label">Daily Change</p>
+        <p class="value" id="dailyChange">--</p>
+      </article>
+      <article class="metric-card">
+        <p class="label">Highest (range)</p>
+        <p class="value" id="rangeHigh">--</p>
+      </article>
+      <article class="metric-card">
+        <p class="label">Lowest (range)</p>
+        <p class="value" id="rangeLow">--</p>
+      </article>
+    </section>
+
+    <section class="panel controls-panel">
+      <div class="controls">
+        <label for="rangeSelect">Range</label>
+        <select id="rangeSelect">
+          <option value="1m">1 month</option>
+          <option value="3m">3 months</option>
+          <option value="6m" selected>6 months</option>
+          <option value="1y">1 year</option>
+          <option value="3y">3 years</option>
+          <option value="5y">5 years</option>
+        </select>
+        <button id="refreshBtn" type="button">Refresh</button>
+      </div>
+      <p class="status" id="status">Loading data...</p>
+      <p class="source">Source: Stooq Gold Futures (<a href="https://stooq.com/q/d/l/?s=gc.f&i=d" target="_blank" rel="noopener noreferrer">gc.f daily CSV</a>)</p>
+    </section>
+
+    <section class="panel chart-panel">
+      <canvas id="goldChart" aria-label="Gold price line chart" role="img"></canvas>
+    </section>
+  </main>
+</body>
+</html>

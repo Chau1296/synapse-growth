@@ -1,0 +1,12 @@
+{
+  "name": "gold-pulse",
+  "version": "1.0.0",
+  "description": "Gold price visualization web app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
