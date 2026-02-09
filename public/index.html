@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synapse Growth | Futuristic Analytics & SaaS Growth Hub</title>
+  <title>Synapse Growth | Analytics Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Exo+2:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -14,175 +14,186 @@
   <div class="backdrop" aria-hidden="true"></div>
 
   <header class="hero">
-    <div class="brand-row">
-      <p class="tag">Neural Knowledge Grid</p>
-      <p class="bubble" id="sparkLine">System sync: initializing insight core...</p>
-    </div>
-
-    <h1>Synapse Growth</h1>
-    <p class="lead">A futuristic command center for data analytics and SaaS growth: theory, frameworks, case studies, and project drills in one connected interface.</p>
-
-    <div class="hero-tools">
-      <label for="topicFilter">Navigate sector</label>
-      <select id="topicFilter">
-        <option value="all">All topics</option>
-        <option value="foundations">Foundations</option>
-        <option value="statistics">Statistics</option>
-        <option value="sql">SQL</option>
-        <option value="skills">Analytics Skills & Mindset</option>
-        <option value="governance">Data Governance</option>
-        <option value="engineering">Data Engineering</option>
-        <option value="frameworks">Analytics Frameworks</option>
-        <option value="saas">SaaS Growth</option>
-        <option value="practice">Practice</option>
-      </select>
-      <input id="searchInput" type="search" placeholder="Search protocols, metrics, case studies..." aria-label="Search knowledge hub">
-    </div>
-
-    <div class="status-row">
-      <p id="resultCount">Showing 0 cards</p>
-      <p>Signal tip: scan <span class="chip">retention</span> or <span class="chip">A/B test</span>.</p>
-    </div>
+    <p class="tag">Synapse Growth</p>
+    <h1>Analytics Command Center</h1>
+    <p class="lead">Build real analytics muscle with learning paths, labs, simulators, planners, and portfolio-ready projects.</p>
   </header>
 
-  <main class="layout" id="knowledgeGrid">
-    <section class="panel" data-topic="foundations">
-      <p class="eyebrow">Theory Base</p>
-      <h2>Analytics Foundations</h2>
-      <p class="summary">Understand the core loop: business question -> metric design -> data collection -> analysis -> decision -> outcome tracking.</p>
-      <ul>
-        <li>Descriptive, diagnostic, predictive, and prescriptive analytics.</li>
-        <li>North Star metric design and metric trees.</li>
-        <li>Leading vs lagging indicators and confidence in decisions.</li>
-      </ul>
-      <p class="example"><strong>Example:</strong> For subscription products, activation rate is often a leading indicator for 30-day retention.</p>
+  <main class="layout">
+    <section class="module" id="learningPaths">
+      <h2>1. Learning Paths</h2>
+      <div class="path-buttons" id="pathButtons"></div>
+      <p id="pathDescription" class="muted"></p>
+      <div id="pathMilestones" class="checklist"></div>
+      <p id="pathProgress" class="mono"></p>
     </section>
 
-    <section class="panel" data-topic="statistics">
-      <p class="eyebrow">Decision Science</p>
-      <h2>Statistics for Product Analytics</h2>
-      <p class="summary">Use statistics to decide under uncertainty, not just to report averages.</p>
-      <ul>
-        <li>Sampling, distributions, confidence intervals, and hypothesis testing.</li>
-        <li>A/B test design: sample size, power, guardrail metrics, segmentation.</li>
-        <li>Causal pitfalls: Simpson's paradox, survivorship bias, and p-hacking.</li>
-      </ul>
-      <p class="example"><strong>Best practice:</strong> Pre-register experiment success criteria before launch.</p>
+    <section class="module" id="sqlLab">
+      <h2>2. Interactive SQL Lab</h2>
+      <label for="sqlChallenge">Challenge</label>
+      <select id="sqlChallenge"></select>
+      <textarea id="sqlQuery" rows="6" placeholder="Write your SQL query here..."></textarea>
+      <div class="actions">
+        <button id="runSqlCheck" type="button">Run Check</button>
+      </div>
+      <p id="sqlFeedback" class="mono"></p>
+      <pre id="sqlExpected" class="code"></pre>
     </section>
 
-    <section class="panel" data-topic="sql">
-      <p class="eyebrow">Builder Toolkit</p>
-      <h2>SQL Mastery Path</h2>
-      <p class="summary">SQL is still the highest-leverage skill for analysts and growth teams.</p>
-      <ul>
-        <li>Core querying: joins, CTEs, window functions, and date handling.</li>
-        <li>Analytics patterns: cohort retention, funnel drop-off, customer LTV.</li>
-        <li>Performance mindset: indexing concepts and query cost awareness.</li>
-      </ul>
-      <p class="example"><strong>Project:</strong> Build a weekly KPI mart with one trusted query per metric.</p>
-    </section>
-
-    <section class="panel" data-topic="skills">
-      <p class="eyebrow">Mindset</p>
-      <h2>Analytics Skills & Mindset</h2>
-      <p class="summary">Great analysts pair technical fluency with structured thinking and clear storytelling.</p>
-      <ul>
-        <li>Problem framing, decomposition, and hypothesis-driven analysis.</li>
-        <li>Stakeholder alignment: convert ambiguity into measurable outcomes.</li>
-        <li>Decision memos: recommendation, tradeoffs, risk, and next test.</li>
-      </ul>
-      <p class="example"><strong>Real world pattern:</strong> Teams trust analysts who expose assumptions and uncertainty clearly.</p>
-    </section>
-
-    <section class="panel" data-topic="governance">
-      <p class="eyebrow">Reliability</p>
-      <h2>Data Governance & Quality</h2>
-      <p class="summary">Reliable decisions require trustworthy data contracts and clear ownership.</p>
-      <ul>
-        <li>Ownership model: domain stewards, metric owners, freshness SLA.</li>
-        <li>Data quality checks: null rates, duplicates, schema drift, anomaly alerts.</li>
-        <li>Privacy basics: retention policy, access controls, and auditability.</li>
-      </ul>
-      <p class="example"><strong>Case:</strong> A canonical "active customer" metric removes cross-team reporting conflict.</p>
-    </section>
-
-    <section class="panel" data-topic="engineering">
-      <p class="eyebrow">Pipelines</p>
-      <h2>Data Engineering for Analytics</h2>
-      <p class="summary">Modern analytics needs robust pipelines, observability, and reproducible transformations.</p>
-      <ul>
-        <li>Batch vs streaming architecture and late-arriving event handling.</li>
-        <li>ELT modeling in layers: staging, intermediate, mart.</li>
-        <li>Pipeline health: lineage, test coverage, and backfill strategy.</li>
-      </ul>
-      <p class="example"><strong>Project:</strong> Design an event pipeline supporting both product funnels and finance reporting.</p>
-    </section>
-
-    <section class="panel" data-topic="frameworks">
-      <p class="eyebrow">Playbooks</p>
-      <h2>Analytics Frameworks</h2>
-      <p class="summary">Frameworks reduce chaos and make analysis outputs reusable.</p>
-      <ul>
-        <li>AARRR funnel for growth diagnostics.</li>
-        <li>HEART for product health and user experience metrics.</li>
-        <li>Opportunity Solution Tree for linking user problems to outcomes.</li>
-      </ul>
-      <p class="example"><strong>Best practice:</strong> Pair every framework with a metric dictionary and review cadence.</p>
-    </section>
-
-    <section class="panel" data-topic="saas">
-      <p class="eyebrow">Growth Engine</p>
-      <h2>SaaS Growth Analytics</h2>
-      <p class="summary">SaaS growth compounds when acquisition quality, activation, retention, and monetization align.</p>
-      <ul>
-        <li>Core metrics: MRR, ARR, CAC, payback period, NRR, gross/net churn.</li>
-        <li>Pricing & packaging analysis for expansion revenue.</li>
-        <li>Lifecycle analytics from signup to expansion loops.</li>
-      </ul>
-      <p class="example"><strong>Case study:</strong> Improving onboarding completion by 8% lifted 90-day retention and NRR.</p>
-    </section>
-
-    <section class="panel case-panel" data-topic="saas">
-      <p class="eyebrow">Story Time</p>
-      <h2>Case Studies</h2>
-      <div class="case-list" id="caseList"></div>
-    </section>
-
-    <section class="panel practice-panel" data-topic="practice">
-      <p class="eyebrow">Do The Work</p>
-      <h2>Practice Studio</h2>
-      <p class="summary">Train weekly with scenario drills and project prompts. Build your analyst muscle by shipping one mini project at a time.</p>
-
-      <div class="practice-block">
-        <h3>Quick Quiz</h3>
-        <p id="quizQuestion">Loading question...</p>
-        <div class="quiz-actions">
-          <button type="button" id="showAnswerBtn">Reveal Answer</button>
-          <button type="button" id="nextQuestionBtn">Next Question</button>
+    <section class="module" id="caseSimulator">
+      <h2>3. Case Study Simulator</h2>
+      <div class="grid2">
+        <div>
+          <label for="caseStage">Company Stage</label>
+          <select id="caseStage">
+            <option>Seed</option>
+            <option>Series A</option>
+            <option>Series B</option>
+            <option>Enterprise Scale</option>
+          </select>
         </div>
-        <p id="quizAnswer" class="answer"></p>
+        <div>
+          <label for="caseIssue">Primary Issue</label>
+          <select id="caseIssue">
+            <option>Activation drop</option>
+            <option>Churn spike</option>
+            <option>CAC inflation</option>
+            <option>NRR decline</option>
+          </select>
+        </div>
       </div>
+      <label for="caseConstraint">Constraint</label>
+      <input id="caseConstraint" type="text" placeholder="Example: engineering bandwidth is limited">
+      <p id="caseScenario" class="muted"></p>
+      <textarea id="caseResponse" rows="5" placeholder="Write your diagnosis and action plan..."></textarea>
+      <div class="actions">
+        <button id="scoreCase" type="button">Score My Response</button>
+      </div>
+      <p id="caseScore" class="mono"></p>
+      <p id="caseModel" class="muted"></p>
+    </section>
 
-      <div class="practice-block">
-        <h3>Project Prompt Generator</h3>
-        <button type="button" id="projectPromptBtn">Generate Prompt</button>
-        <p id="projectPromptText" class="project-prompt">Press generate to receive a real-world analytics build challenge.</p>
+    <section class="module" id="experimentPlanner">
+      <h2>4. Experiment Planner</h2>
+      <div class="grid2">
+        <input id="expHypothesis" type="text" placeholder="Hypothesis">
+        <input id="expPrimaryMetric" type="text" placeholder="Primary metric">
+        <input id="expGuardrail" type="text" placeholder="Guardrail metric">
+        <input id="expSegment" type="text" placeholder="Target segment">
       </div>
+      <input id="expSample" type="text" placeholder="Sample size assumption">
+      <div class="actions">
+        <button id="buildExperiment" type="button">Build Template</button>
+        <button id="downloadExperiment" type="button">Download .md</button>
+      </div>
+      <pre id="experimentOutput" class="code"></pre>
+    </section>
 
-      <div class="practice-block">
-        <h3>Deliberate Practice Checklist</h3>
-        <ul>
-          <li>Define one business question and one decision owner.</li>
-          <li>Write hypotheses before touching the data.</li>
-          <li>Build one SQL analysis, one chart, and one recommendation memo.</li>
-          <li>List two risks and one follow-up experiment.</li>
-        </ul>
+    <section class="module" id="metricDictionary">
+      <h2>5. Metric Dictionary Builder</h2>
+      <div class="grid2">
+        <input id="metricName" type="text" placeholder="Metric name">
+        <input id="metricOwner" type="text" placeholder="Owner">
+        <input id="metricFormula" type="text" placeholder="Formula definition">
+        <input id="metricCadence" type="text" placeholder="Cadence (daily/weekly)">
       </div>
+      <div class="actions">
+        <button id="addMetric" type="button">Add / Update Metric</button>
+      </div>
+      <p id="metricAlert" class="mono"></p>
+      <div id="metricTable"></div>
+      <div id="metricHistory" class="muted"></div>
+    </section>
+
+    <section class="module" id="dashboardGallery">
+      <h2>6. Dashboard Gallery</h2>
+      <label for="dashboardRole">Filter by role</label>
+      <select id="dashboardRole">
+        <option value="all">All</option>
+        <option value="executive">Executive</option>
+        <option value="pm">Product Manager</option>
+        <option value="analyst">Analyst</option>
+        <option value="cs">Customer Success</option>
+      </select>
+      <div id="dashboardCards" class="cards"></div>
+    </section>
+
+    <section class="module" id="practiceEngine">
+      <h2>7. Practice Engine</h2>
+      <label for="practiceDifficulty">Difficulty</label>
+      <select id="practiceDifficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <div class="actions">
+        <button id="newPractice" type="button">New Challenge</button>
+      </div>
+      <p id="practicePrompt" class="muted"></p>
+      <textarea id="practiceAnswer" rows="4" placeholder="Your answer..."></textarea>
+      <div class="actions">
+        <button id="submitPractice" type="button">Submit Answer</button>
+      </div>
+      <p id="practiceFeedback" class="mono"></p>
+      <p id="practiceStreak" class="mono"></p>
+    </section>
+
+    <section class="module" id="projectWorkspace">
+      <h2>8. Project Workspace</h2>
+      <label for="projectTrack">Capstone Project</label>
+      <select id="projectTrack"></select>
+      <div id="projectMilestones" class="checklist"></div>
+      <textarea id="projectNotes" rows="4" placeholder="Project notes"></textarea>
+      <textarea id="projectMemo" rows="4" placeholder="Executive memo draft"></textarea>
+      <div class="actions">
+        <button id="saveProject" type="button">Save Workspace</button>
+      </div>
+      <p id="projectProgress" class="mono"></p>
+    </section>
+
+    <section class="module" id="communityLayer">
+      <h2>9. Community Layer</h2>
+      <p class="muted">Peer examples:</p>
+      <div id="communityExamples" class="cards"></div>
+      <input id="communityTitle" type="text" placeholder="Your solution title">
+      <textarea id="communityPost" rows="3" placeholder="Share your approach for peer feedback"></textarea>
+      <div class="actions">
+        <button id="postCommunity" type="button">Post to Community Board</button>
+      </div>
+      <div id="communityBoard"></div>
+    </section>
+
+    <section class="module" id="careerToolkit">
+      <h2>10. Career Toolkit</h2>
+      <label for="interviewTopic">Interview bank topic</label>
+      <select id="interviewTopic">
+        <option value="sql">SQL</option>
+        <option value="stats">Statistics</option>
+        <option value="product">Product analytics</option>
+      </select>
+      <div class="actions">
+        <button id="getInterviewQ" type="button">Get Question</button>
+      </div>
+      <p id="interviewQuestion" class="muted"></p>
+
+      <div class="grid2">
+        <input id="portfolioDomain" type="text" placeholder="Portfolio project domain">
+        <input id="portfolioTool" type="text" placeholder="Tool stack (SQL, dbt, BI, Python)">
+      </div>
+      <div class="actions">
+        <button id="genPortfolio" type="button">Generate Portfolio Idea</button>
+      </div>
+      <p id="portfolioIdea" class="muted"></p>
+
+      <div class="grid2">
+        <input id="resumeAction" type="text" placeholder="Action taken">
+        <input id="resumeImpact" type="text" placeholder="Measured impact">
+      </div>
+      <div class="actions">
+        <button id="genBullet" type="button">Generate Resume Bullet</button>
+      </div>
+      <p id="resumeBullet" class="mono"></p>
     </section>
   </main>
-
-  <footer class="footer">
-    <p>Use Synapse Growth as a reusable curriculum for analyst onboarding, interview prep, and cross-functional analytics coaching.</p>
-  </footer>
 </body>
 </html>
